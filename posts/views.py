@@ -1,5 +1,8 @@
-from rest_framework import generics, permissions
 from django.shortcuts import get_object_or_404
+
+from rest_framework import generics, permissions, status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .models import Post, Comment
 from .serializers import PostListSerializer, PostCreateSerializer, PostDetailSerializer, \
@@ -41,6 +44,18 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+
+@api_view(['POST'])
+def upvote_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    user = request.user
+    print(user.username)
+    if user not in post.upvotes.all():
+        post.upvotes.add(user)
+        return Response(data={'message': 'Up voted!'}, status=status.HTTP_202_ACCEPTED)
+    else:
+        post.upvotes.remove(user)
+        return Response(data={'message': 'Un voted!'}, status=status.HTTP_202_ACCEPTED)
 
 
 

@@ -8,6 +8,8 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='posts')
+    upvotes = models.ManyToManyField(User, blank=True, symmetrical=False,
+                                     related_name='posts_liked')
 
     class Meta:
         ordering = ('-created',)
