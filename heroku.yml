@@ -1,12 +1,12 @@
 setup:
   addons:
-    - plan: heroku-postgresql
+  - plan: heroku-postgresql
 build:
   docker:
     web: Dockerfile
 release:
-  images: web
+  image: web
   command:
     - python manage.py collectstatic --noinput
 run:
-  web: gunicorn hacker_news.wsgi
+  web: gunicorn config.wsgi
