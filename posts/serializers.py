@@ -6,7 +6,7 @@ from .models import Post, Comment, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('id', 'username',)
 
 
 class CommentSerializer(serializers.ModelSerializer):

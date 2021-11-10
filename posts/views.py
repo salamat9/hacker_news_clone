@@ -4,6 +4,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from .tasks import reset_upvotes
 from .permissions import IsOwnerOrReadOnly
 from .models import Post, Comment
 from .serializers import PostListSerializer, PostCreateSerializer, PostDetailSerializer, \
@@ -39,6 +40,18 @@ class CommentListCreateView(generics.ListCreateAPIView):
         post = get_object_or_404(Post, pk=self.kwargs['pk'])
         serializer.save(author=self.request.user, post=post)
 
+    def list(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        queryset = Comment.objects.filter(post=post)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
@@ -46,7 +59,7 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 def upvote_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     user = request.user
@@ -59,6 +72,10 @@ def upvote_post(request, pk):
         return Response(data={'message': 'Un voted!'}, status=status.HTTP_202_ACCEPTED)
 
 
+@api_view(['POST', 'GET'])
+def clear_upvotes(request):
+    reset_upvotes()
+    return Response(data={'message': 'Upvotes was cleared!'}, status=status.HTTP_202_ACCEPTED)
 
 
 
