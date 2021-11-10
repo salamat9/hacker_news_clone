@@ -1,9 +1,14 @@
 <h1>Тестовое задание: клон <a href="https://news.ycombinator.com/">Hacker news</a></h1>
 <hr>
-<p>Что бы запустить проект локально склонируйте репозиторий:</p>
+
+<p>Что бы запустить проект локально стяните репозиторий:</p>
+
 > git clone git@github.com:salamat9/hacker_news_clone.git`
+
 <p>после перейдите в папку hacker_news_clone</p>
-`cd hacker_news_clone`
+
+> cd hacker_news_clone
+
 <hr>
 <h3>запуск с помощью докера</h3>
 
@@ -11,7 +16,7 @@
 
 > docker-compose up -d build
 
-<p>применим миграции</p>
+<p>примените миграции</p>
 
 > docker-compose exec web python manage.py migrate
 
