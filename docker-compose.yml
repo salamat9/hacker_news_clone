@@ -4,6 +4,9 @@ services:
   web:
     build: .
     command: gunicorn hacker_news.wsgi -b 0.0.0.0:8000
+    environment:
+      - SECRET_KEY=django-insecure-e!p8^$$3!ajr83_#_k=0k+$$b_&ocn8+pwj6el)w=v47jjcm@%at
+      - DEBUG=1
     volumes:
       - .:/code
     ports:
