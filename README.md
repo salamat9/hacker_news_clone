@@ -1,6 +1,8 @@
 <h1>Тестовое задание: клон <a href="https://news.ycombinator.com/">Hacker news</a></h1>
 <hr>
 
+<h2>посмотреть проект можно по этой ссылке <a href="https://ancient-basin-43619.herokuapp.com/">ссылка</h2>
+
 <p>Что бы запустить проект локально стяните репозиторий:</p>
 
 > git clone git@github.com:salamat9/hacker_news_clone.git`
