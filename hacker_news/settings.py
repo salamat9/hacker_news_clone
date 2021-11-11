@@ -1,17 +1,11 @@
 import os
 import dj_database_url
 from pathlib import Path
-from environs import Env
-
-env = Env()
-env.read_env()
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECRET_KEY = 'django-insecure-e!p8^$3!ajr83_#_k=0k+$b_&ocn8+pwj6el)w=v47jjcm@%at'
-SECRET_KEY = env("DJANGO_SECRET_KEY")
-DEBUG = env.bool("DJANGO_DEBUG", default=False)
+SECRET_KEY = 'django-insecure-e!p8^$3!ajr83_#_k=0k+$b_&ocn8+pwj6el)w=v47jjcm@%at'
+DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1', 'ancient-basin-43619.herokuapp.com']
 
